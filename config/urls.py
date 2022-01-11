@@ -3,12 +3,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
-
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
 from config.settings import MEDIA_URL, MEDIA_ROOT
-
 
 schema_view = get_schema_view(openapi.Info(title="Welltory API",
                                            default_version='v2.0',
@@ -21,9 +19,9 @@ ROOT_API_PATH = 'api/'  # корневой путь для всех api, кро�
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path(ROOT_API_PATH, include('data_welltory.urls')),
-    path(ROOT_API_PATH, include('accounts.urls')),
-    path(ROOT_API_PATH, include('feedback.urls')),
+#   path(ROOT_API_PATH, include('welltory_test.urls')),
+#   path(ROOT_API_PATH, include('accounts.urls')),
+
     # документация
 
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

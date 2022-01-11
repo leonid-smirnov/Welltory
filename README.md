@@ -63,5 +63,10 @@ Django: POST, PUT, GET, DELETE requests
 #### Добавить суперпользователя (для захода в админку):
 1. Смотрим список запущенных контейнеров командой:
 > docker-compose ps
-2. Находим контейнер с "web" в имени. Добавляем суперпользователя командой (web_1 - имя контейнера из п.1):
+
+2. После первого запуска docker делаем миграции.
+> docker exec -it welltory_web_1 python manage.py makemigrations
+> docker exec -it welltory_web_1 python manage.py migrate
+
+3.Находим контейнер с "web" в имени. Добавляем суперпользователя командой (web_1 - имя контейнера из п.1):
 > docker exec -it web_1 python manage.py createsuperuser

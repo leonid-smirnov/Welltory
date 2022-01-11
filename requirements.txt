@@ -1,5 +1,13 @@
-beautifulsoup4==4.10.0
+# core
+Django==3.2.8
+djangorestframework==3.12.4
 
+# database
+mysqlclient==2.0.1
+django-mysql==3.8.1
+
+# bs4
+beautifulsoup4==4.10.0
 html5lib
 lxml
 
@@ -10,15 +18,15 @@ drf-yasg==1.20.0
 PyJWT==2.3.0
 
 # media files
-Pillow==8.4.0
+Pillow==9.0.0
 
 # email sending
-sendgrid==6.8.3
+sendgrid==6.9.3
 
 # extra-fields (base64 for photo, etc)
 drf-extra-fields
 
+# .env
 python-dotenv==0.19.2
 
-
-requests~=2.26.0
+requests==2.27.1

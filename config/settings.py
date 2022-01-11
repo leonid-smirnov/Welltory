@@ -32,19 +32,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Application definition
 
 INSTALLED_APPS = [
+    #'corsheaders',  # CORS
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Welltory_Test.apps.WelltoryTestConfig',    # Web приложение для Welltory
+    'welltory_test.apps.WelltoryTestConfig',    # Web приложение для Welltory
     'drf_yasg',  # Swagger автодокументация API
     'accounts.apps.AccountsConfig',  # пользователи, права, авторизация
 ]
 
+AUTH_USER_MODEL = 'accounts.User'  # модель пользователя
+
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,7 +91,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
         "OPTIONS": {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1",
+            #'init_command': "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1",
             'charset': 'utf8mb4',
             "autocommit": True,
             }
