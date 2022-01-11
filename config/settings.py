@@ -29,12 +29,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Welltory_Test.apps.WelltoryTestConfig',    # Web приложение для Welltory
+    'drf_yasg',  # Swagger автодокументация API
+    'accounts.apps.AccountsConfig',  # пользователи, права, авторизация
 ]
 
 MIDDLEWARE = [
@@ -91,7 +87,12 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
-    }
+        "OPTIONS": {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1",
+            'charset': 'utf8mb4',
+            "autocommit": True,
+            }
+        }
 }
 
 
@@ -125,13 +126,39 @@ USE_I18N = True
 
 USE_L10N = True
 
+USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# SWAGGER
+
+REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+                  # пагинация
+                  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+                  'PAGE_SIZE': 10,
+                  # собственный формат возвращения ошибок
+                  'EXCEPTION_HANDLER': 'config.exceptions.core_exception_handler',
+                  'NON_FIELD_ERRORS_KEY': 'error',
+                  # аутентификация JWT
+                  'DEFAULT_AUTHENTICATION_CLASSES': (
+                      'accounts.backends.JWTAuthentication',
+                  ),
+                  # необходимая авторизация по умолчанию - выключена (AllowAny)
+                  'DEFAULT_PERMISSION_CLASSES': (
+                      'rest_framework.permissions.AllowAny',)
+                  }
+
+SWAGGER_SETTINGS = {'DISPLAY_OPERATION_ID': False,
+                    'DOC_EXPANSION': 'Full',
+                    'SECURITY_DEFINITIONS': {
+                        'Bearer': {
+                            'type': 'apiKey',
+                            'name': 'Authorization',
+                            'in': 'header'}
+                    }
+                    }
