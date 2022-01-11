@@ -7,10 +7,25 @@ from drf_yasg.utils import swagger_auto_schema
 from welltory_test.serializers.serializer_data import Data_User_Serializer
 from rest_framework.decorators import api_view
 
+from accounts.backends import get_user_id_from_token
+from accounts.models import User
+from rest_framework.response import Response
 
 @api_view(['GET', 'POST', 'DELETE'])
 @swagger_auto_schema(responses={200: Data_User_Serializer})
 def get_data_list(request):
+
+
+    # user_id = get_user_id_from_token(request)
+    # try:
+    #     user = User.objects.all(user=user_id)
+    #
+    # except ObjectDoesNotExist:
+    #     return Response(
+    #         data={f"Пользователь не найден (поиск по user_id из токена)"},
+    #         status=400,
+    #     )
+
     if request.method == 'GET':
         Data_list = Data_from_users.objects.all()
 
