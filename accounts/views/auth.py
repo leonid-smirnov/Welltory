@@ -11,11 +11,16 @@ from drf_yasg.utils import swagger_auto_schema
 from accounts.swagger.auth import signup_request_body, login_response_body
 
 
+
 class Signup(APIView):
     """регистрация нового пользователя"""
 
     @swagger_auto_schema(request_body=signup_request_body, responses={201: ''})
     def post(self, request):
+
+        """
+        API endpoints for posts
+        """
         # создание user
         try:
             user_serializer = UserCredentialsViewSerializer(data={'email': request.data.get('email'),

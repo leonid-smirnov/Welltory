@@ -9,7 +9,7 @@ from drf_yasg.views import get_schema_view
 from config.settings import MEDIA_URL, MEDIA_ROOT
 
 schema_view = get_schema_view(openapi.Info(title="Welltory API",
-                                           default_version='v2.0',
+                                           default_version='v 1.0',
                                            public=True
                                            )
                               )
@@ -19,8 +19,8 @@ ROOT_API_PATH = 'api/'  # корневой путь для всех api, кро�
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-#   path(ROOT_API_PATH, include('welltory_test.urls')),
-#   path(ROOT_API_PATH, include('accounts.urls')),
+   path(ROOT_API_PATH, include('welltory_test.urls')),
+   path(ROOT_API_PATH, include('accounts.urls')),
 
     # документация
 

@@ -53,8 +53,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     class Meta:
-        verbose_name = 'пользователь'
-        verbose_name_plural = 'пользователи'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
         db_table = "user"
 
     @property
