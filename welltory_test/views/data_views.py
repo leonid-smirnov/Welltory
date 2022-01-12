@@ -41,9 +41,9 @@ def get_data_list(request):
 '''Методы для получения/обновления/удаления информации по идентификатору строки'''
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def get_data_detail(request, user_id):
+def get_data_detail(request, pk):
     try:
-        Data_list = Data_from_users.objects.get(user=user_id)
+        Data_list = Data_from_users.objects.get(pk=pk)
     except Data_from_users.DoesNotExist:
         return JsonResponse({'message': 'Data does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
