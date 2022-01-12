@@ -22,7 +22,7 @@ class Data_from_users(models.Model):
                                      blank=False)  # Дата изменения
 
     class Meta:
-        db_table = 'users data'
+        db_table = 'users_data'
         ordering = ("date",)  # Сортировка по дате
         verbose_name = "Данные"
         verbose_name_plural = "Данные"
