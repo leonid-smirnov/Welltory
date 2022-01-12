@@ -72,13 +72,13 @@ def get_data_detail(request, pk):
 @api_view(['GET', 'PUT', 'DELETE'])
 def get_all_data_by_user_id(request, user_id):
     try:
-        Data_list1 = Data_from_users.objects.all().filter(user=user_id)
+        Data_list = Data_from_users.objects.filter(user=user_id)
     except Data_from_users.DoesNotExist:
         return JsonResponse({'message': 'User data does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        Data_list_serializer = Data_User_Serializer(Data_list1)
-        return JsonResponse(Data_list_serializer.data)
+        Data_list_serializer = Data_User_Serializer(Data_list, many=True)
+        return JsonResponse(Data_list_serializer.data, safe=False)
 
     # elif request.method == 'PUT':
     #     Data_list1 = JSONParser().parse(request)
