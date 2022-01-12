@@ -1,4 +1,5 @@
 # Welltory
+
 #### Веб-сервис для обработки данных.
 
 #### Контекст задачи:
@@ -7,7 +8,7 @@
     все данные имеют тип float
     в результате сбора данных мы имеем массивы вида [{"date": ..., "value": ...}, {"date": ..., "value": ...}, ...]
     видов (например шаги, средняя частота пульса и тп) данных может быть много, в рамках этой задачи будем считать, что они однозначно различаются по строковому    названию (см. примеры запросов к АПИ ниже)
-    
+
 #### ТЗ выглядит следующим образом:
 
     Реализовать HTTP веб-сервис. Сервис должен предоставлять HTTP API с помощью которого можно посчитать корреляцию по Пирсону между 2 векторами данных разных типов
@@ -21,50 +22,40 @@
 
     Принимает входные данные в JSON-формате:
 
-
 #### Настройка среды разработки
 
-REST API DEV Django + MYSQL + DOCKER
-Проверка через POSTMAN
-Django: POST, PUT, GET, DELETE requests 
-
+REST API DEV Django + MYSQL + DOCKER Проверка через POSTMAN Django: POST, PUT, GET, DELETE requests
 
 #### Настройка и сборка Docker
 
 1. Собрать и запустить докер-контейнер (по инструкции ниже)
-1.1 Собрать контейнер
+   1.1 Собрать контейнер
+
 > docker-compose -f docker-compose.yml build
 
-2. Запустить контейнер
+1.2 Запустить контейнер
 > docker-compose -f docker-compose.yml up
-* при первом запуске может возникнуть ошибка сервиса web - 
-> web_1  | django.db.utils.OperationalError: (2002, "Can't connect to MySQL server on 'db' (115)")
-> 
-лечится следующим образом:
-дожидаетесь, пока db_1 загрузится и в логе db_1 будет: 
-> "/usr/sbin/mysqld: ready for connections."
-
-нажимаете 1 раз ctrl+c, дожидаетесь остановки сервиса:
-> Stopping web_1 ... done 
-
-> Stopping db_1  ... done 
-
-Снова запускаете контейнер (п.2)
 
 #### Остановка контейнера (можно повторно запустить):
+
 > docker-compose -f docker-compose.yml stop
 
 #### Остановка контейнера с удалением контейнера
+
 > docker-compose -f docker-compose.yml down
 
 #### Остановка контейнера с удалением контейнера и волюмов БД
+
 > docker-compose -f docker-compose.yml down -v
 
 #### Добавить суперпользователя (для захода в админку):
+
 1. Смотрим список запущенных контейнеров командой:
-> docker-compose ps
+
+> docker-compose ps -a
 
 2. После первого запуска docker делаем миграции.
+
 > docker exec -it welltory_web_1 python manage.py makemigrations
 > docker exec -it welltory_web_1 python manage.py migrate
 
