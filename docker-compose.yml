@@ -12,7 +12,8 @@ services:
       - '8000:8000'
     depends_on:
       - db
-    restart: always
+    restart: on-failure
+
 
   db:
     image: mysql:8.0.27
@@ -24,7 +25,10 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
-
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 5
     volumes:
       - ./db_django:/var/lib/mysql/
     restart: always
