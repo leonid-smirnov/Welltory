@@ -20,10 +20,6 @@ class User_data(ModelAdmin):
 
     def pearson(self, Pearson_count):
 
-        # self.Pearson_count = Pearson_count
-        # date_steps = self.date_steps
-        # date_pulse = self.date_pulse
-
         date_steps = Data_from_users.objects.filter()
         date_steps_v = date_steps.values_list('date_steps')
         date_steps = np.array(date_steps_v)
@@ -47,9 +43,7 @@ class User_data(ModelAdmin):
         calc_pulse = []
         steps_calc = []
 
-
-
-        for i in pk - 19:
+        for i in range(len(pk)):
 
             if date_steps[i] == date_pulse[i] and pulse[i] > 0 and steps[i] > 0:
                 calc_pulse = np.append(calc_pulse, pulse[i])
