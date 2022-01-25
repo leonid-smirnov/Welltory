@@ -29,18 +29,6 @@ class Data_from_users(models.Model):
     def __str__(self):
         return self.title
 
-    # @property
-    # def pearson(self):
-    #     pulse = Data_from_users.objects.filter(pulse__gt=0)
-    #     pulse_v = pulse.values_list('pulse')
-    #     pulse = np.array(pulse_v)
-    #
-    #     steps = Data_from_users.objects.filter(steps__gt=0)
-    #     steps_v = steps.values_list('steps')
-    #     steps = np.array(steps_v)
-    #
-    #     num = np.corrcoef(steps, pulse, rowvar=False)[1, 0]
-    #     return num
 
     class Meta:
         db_table = 'users_data'
@@ -48,6 +36,6 @@ class Data_from_users(models.Model):
         verbose_name = "Данные"
         verbose_name_plural = "Данные"
 
-    # def save(self, *args, **kwargs):
-    #     self.Pearson_count = self.pearson
-    #     super(Data_from_users, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.Pearson_count = self.Pearson_count
+        super(Data_from_users, self).save(*args, **kwargs)

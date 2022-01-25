@@ -6,7 +6,6 @@ from welltory_test.models import Data_from_users
 from drf_yasg.utils import swagger_auto_schema
 from welltory_test.serializers.serializer_data import DataUserSerializer, DataUserSerializerTest
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from welltory_test.swagger.welltory import welltory_request_params
 
 '''Методы для полного получения/передачи/удаления информации'''
