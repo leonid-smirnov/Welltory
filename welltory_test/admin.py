@@ -1,16 +1,41 @@
+""" Provides PEARSON arithmetic function for admin panel """
+import numpy as np
+from welltory_test.models import Data_from_users
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from welltory_test.models import Data_from_users
-import numpy as np
+"""Admin class init Pearson calculate function"""
 
 
 @admin.register(Data_from_users)
 class User_data(ModelAdmin):
-    fields = ('user', 'title', 'date_steps', 'steps', 'date_pulse', 'pulse', 'date_temperature', 'temperature')
+    fields = (
+        'user',
+        'title',
+        'date_steps',
+        'steps',
+        'date_pulse',
+        'pulse',
+        'date_temperature',
+        'temperature',
+    )
+
     list_display = (
-        'user', 'title', 'date_steps', 'steps', 'date_pulse', 'pulse', 'date_temperature', 'temperature', 'pearson')
-    readonly_fields = ('created_at', 'edited_at')
+        'user',
+        'title',
+        'date_steps',
+        'steps',
+        'date_pulse',
+        'pulse',
+        'date_temperature',
+        'temperature',
+        'pearson',
+    )
+
+    readonly_fields = (
+        'created_at',
+        'edited_at',
+    )
 
     def __init__(self, model, admin_site):
         super().__init__(model, admin_site)
@@ -43,12 +68,22 @@ class User_data(ModelAdmin):
         calc_pulse = []
         steps_calc = []
 
-        for i in range(len(pk)):
+        for date_s in date_steps:
+            for date_p in date_pulse:
+                if date_s == date_p:
 
-            if date_steps[i] == date_pulse[i] and pulse[i] > 0 and steps[i] > 0:
-                calc_pulse = np.append(calc_pulse, pulse[i])
-                steps_calc = np.append(steps_calc, steps[i])
+                    for i in range(0, len(pk)):
 
-                Pearson_count = np.corrcoef(calc_pulse, steps_calc, rowvar=False)[0, 1]
+                        if pulse[i] > 0 and steps[i] > 0:
+
+                            calc_pulse = np.append(calc_pulse, pulse[i], axis=0)
+                            steps_calc = np.append(steps_calc, steps[i], axis=0)
+
+                            Pearson_count = np.corrcoef(calc_pulse, steps_calc, rowvar=False)[0, 1]
+
+                        else:
+                            pass
+                else:
+                    pass
 
         return Pearson_count
