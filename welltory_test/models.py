@@ -1,6 +1,10 @@
 """Описание моделей для БД"""
+import numpy as np
 from django.conf import settings
 from django.db import models
+
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class Data_from_users(models.Model):
@@ -13,7 +17,7 @@ class Data_from_users(models.Model):
         editable=True,
         null=False,
         blank=True,
-    )   # Название
+    )  # Название
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -53,7 +57,7 @@ class Data_from_users(models.Model):
 
     temperature = models.FloatField(
         verbose_name='Температура',
-        null=True,
+        null=False,
         blank=True,
     )  # Температура
 
@@ -77,7 +81,8 @@ class Data_from_users(models.Model):
         max_length=30,
         blank=True,
         default=None,
-    )   # Расчетное значение Пирсона
+        null=False,
+    )  # Расчетное значение Пирсона
 
     class Meta:
         """Мета класс модели - название, сортировка"""
@@ -86,9 +91,57 @@ class Data_from_users(models.Model):
         verbose_name = "Данные"
         verbose_name_plural = "Данные"
 
-    def save(self, *args, **kwargs):
-        self.Pearson_count = self.Pearson_count
-        super().save(*args, **kwargs)
+    @property
+    def pearson(self):
+        """ Функция расчета Коэффициента корреляции Пирсона """
+
+        date_steps = Data_from_users.objects.filter()
+        date_steps_v = date_steps.values_list('date_steps')
+        date_steps = np.array(date_steps_v)
+
+        date_pulse = Data_from_users.objects.filter()
+        date_pulse_v = date_pulse.values_list('date_pulse')
+        date_pulse = np.array(date_pulse_v)
+
+        pk = Data_from_users.objects.filter()
+        pk_v = pk.values_list('pk')
+        pk = np.array(pk_v)
+
+        pulse = Data_from_users.objects.filter()
+        pulse_v = pulse.values_list('pulse')
+        pulse = np.array(pulse_v)
+
+        steps = Data_from_users.objects.filter()
+        steps_v = steps.values_list('steps')
+        steps = np.array(steps_v)
+
+        calc_pulse = []
+        steps_calc = []
+
+        for date_s in date_steps:
+            for date_p in date_pulse:
+                if date_s == date_p:
+
+                    for i in range(0, len(pk)):
+
+                        if pulse[i] > 0 and steps[i] > 0:
+
+                            calc_pulse = np.append(calc_pulse, pulse[i], axis=0)
+                            steps_calc = np.append(steps_calc, steps[i], axis=0)
+
+                            Pearson_count = np.corrcoef(calc_pulse, steps_calc, rowvar=False)[0, 1]
+
+                        else:
+                            pass
+                else:
+                    pass
+
+        return Pearson_count
+
+
+@receiver(pre_save, sender=Data_from_users)
+def calc_pearson_total(sender, instance, **kwargs):
+    instance.Pearson_count = instance.pearson
 
 
 def __str__(self):
