@@ -1,3 +1,5 @@
+"""urls to main project url file"""
+
 from django.conf.urls import url
 from welltory_test.views import data_views
 

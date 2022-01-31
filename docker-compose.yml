@@ -3,7 +3,15 @@ version: '3'
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo "sleep for 10sec"
+        sleep 10
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+
     env_file:
       - .env
     volumes:
@@ -24,7 +32,10 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
-
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 5
     volumes:
       - ./db_django:/var/lib/mysql/
     restart: always
