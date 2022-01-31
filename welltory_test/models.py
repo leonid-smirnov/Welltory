@@ -6,13 +6,15 @@ from django.db import models
 class Data_from_users(models.Model):
     """Класс модели данных от пользователей в БД, описание полей"""
     id = models.AutoField  # Идентификатор строки
+
     title = models.CharField(
         max_length=20,
         verbose_name='Название',
         editable=True,
         null=False,
         blank=True,
-    )
+    )   # Название
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name='Пользователь',
@@ -27,7 +29,8 @@ class Data_from_users(models.Model):
 
     steps = models.FloatField(
         verbose_name='Количество шагов',
-        null=False, blank=True,
+        null=False,
+        blank=True,
     )  # Данные значений шагов
 
     date_pulse = models.DateField(
@@ -47,6 +50,7 @@ class Data_from_users(models.Model):
         editable=True,
         null=False,
     )  # Дата внесения значений
+
     temperature = models.FloatField(
         verbose_name='Температура',
         null=True,
@@ -58,22 +62,22 @@ class Data_from_users(models.Model):
         auto_now_add=True,
         editable=False,
         null=False,
-        blank=False
+        blank=False,
     )  # Дата создания
 
     edited_at = models.DateTimeField(
         verbose_name='Дата изменения',
-        auto_now_add=True,
+        auto_now=True,
         editable=False,
         null=False,
-        blank=False
+        blank=False,
     )  # Дата изменения
 
     Pearson_count = models.FloatField(
         max_length=30,
         blank=True,
-        null=True,
-        default=None)
+        default=None,
+    )   # Расчетное значение Пирсона
 
     class Meta:
         """Мета класс модели - название, сортировка"""
