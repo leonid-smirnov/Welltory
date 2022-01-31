@@ -141,6 +141,8 @@ class Data_from_users(models.Model):
 
 @receiver(pre_save, sender=Data_from_users)
 def calc_pearson_total(sender, instance, **kwargs):
+    """Функция переопределения метода save() модели для записи расчетного поля
+    (Коэффициента корреляции Пирсона) в БД"""
     instance.Pearson_count = instance.pearson
 
 
