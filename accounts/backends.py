@@ -1,5 +1,3 @@
-import jwt
-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from jwt import decode

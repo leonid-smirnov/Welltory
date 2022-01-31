@@ -1,8 +1,12 @@
 from drf_yasg import openapi
 
 welltory_request_params = [
-    openapi.Parameter('id', in_=openapi.IN_QUERY, type=openapi.TYPE_INTEGER, description='id')
-    ]
+    openapi.Parameter('id',
+                      in_=openapi.IN_QUERY,
+                      type=openapi.TYPE_INTEGER,
+                      description='id',
+    )
+]
 
 welltory_schema = openapi.Schema(type=openapi.TYPE_OBJECT,
                                          properties={
@@ -24,5 +28,5 @@ welltory_schema = openapi.Schema(type=openapi.TYPE_OBJECT,
                                                                           description='дата температура'),
                                              'temperature': openapi.Schema(type=openapi.TYPE_INTEGER,
                                                                      description='температура'),
-                                             }
-                                         )
+                                         }
+)

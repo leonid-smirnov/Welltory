@@ -1,3 +1,4 @@
+"""Main url project file"""
 from django.urls import path
 
 from accounts.views.auth import Signup, Login  # , Logout, UpdateToken

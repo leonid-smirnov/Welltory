@@ -1,4 +1,4 @@
-"""Обисание моделей для БД"""
+"""Описание моделей для БД"""
 from django.conf import settings
 from django.db import models
 
